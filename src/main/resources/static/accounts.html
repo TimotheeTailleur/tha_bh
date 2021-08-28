@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Home Assignment - Blue Harvest - Timothée TAILLEUR</title>
+
+    <!-- Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Material Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<nav>
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li class="active"><a href="accounts.html">Accounts</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="create_new_account">
+    <div class="input-field">
+        <label for="customer_id">Customer Id</label>
+        <input id="customer_id" type="number">
+    </div>
+
+    <div class="input-field">
+        <label for="initial_credit">Initial Credit</label>
+        <input id="initial_credit" type="number">
+    </div>
+
+    <button id="submit_button" class="btn waves-effect waves-light">Submit
+    </button>
+
+</div>
+
+<div id="response" hidden>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+       $("#submit_button").click(function () {
+          let formData = {};
+           formData.customerId=$("#customer_id").val();
+           formData.initialCredit=$("#initial_credit").val();
+
+          $.post("/accounts", formData, function(responseData, status) {
+              if (status == 200) {
+                  $("#response").innerText = "New account with Id  "+ responseData +" created";
+              } else {
+                  $("#response").innerText = "There was an error creating a new account for the specified customer";
+              }
+          })
+       });
+    });
+</script>
+
+</body>
+</html>
