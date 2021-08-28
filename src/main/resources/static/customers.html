@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Home Assignment - Blue Harvest - Timothée TAILLEUR</title>
+
+    <!-- Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Material Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<nav>
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a href="homepage.html">Home</a></li>
+            <li class="active" ><a href="customers.html">Customers</a></li>
+            <li><a href="accounts.html">Accounts</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="get_customer_info">
+    <div class="input-field">
+        <input id="customer_id" type="number">
+        <label for="customer_id">Customer Id</label>
+    </div>
+
+    <button id="search_button" class="btn waves-effect waves-light">Submit
+    </button>
+
+    <div id="search_result" hidden>
+        <h2>Search result</h2>
+
+        <label for="name">Name</label>
+        <p id="name">Nn</p>
+        <label for="surname">Surname</label>
+        <p id="surname">ss</p>
+        <label for="balance">Balance</label>
+        <p id="balance">bb</p>
+
+
+        <label for="transactions_table">Stored transactions</label>
+        <table id="transactions_table">
+            <thead>
+                <tr>
+                    <th scope="col">Account Id</th>
+                    <th scope="col">Transaction Id</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        $("#search_button").click(function() {
+            $("#search_result").show();
+            customerId = document.getElementById("customer_id").value;
+            $.get("/customers/"+customerId, function(data, status) {
+                if (status == 200) {
+                    $("#name").innerText = data.name;
+                    $("#surname").innerText = data.surName;
+                    $("#balance").innerText = data.balance;
+
+                    for (account in data.accounts) {
+                        for (transaction in account.transactions) {
+                            newRow = '<tr>'+
+                                '<td>'+account.id +'</td>'+
+                                '<td>'+transaction.id +'</td>'+
+                                '<td>'+transaction.amount +'</td>'+ '</tr>';
+                            $('#transactions_table tr:last').after(newRow);
+                        }
+                    }
+                }
+            });
+        });
+    });
+
+
+</script>
+</body>
+</html>
