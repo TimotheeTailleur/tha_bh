@@ -1,4 +1,4 @@
-package com.bh.tha_bh;
+package com.bh.tha;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -48,19 +48,25 @@
 
 <script>
     $(document).ready(function () {
-       $("#submit_button").click(function () {
-          let formData = {};
-           formData.customerId=$("#customer_id").val();
-           formData.initialCredit=$("#initial_credit").val();
-
-          $.post("/accounts", formData, function(responseData, status) {
-              if (status == 200) {
-                  $("#response").innerText = "New account with Id  "+ responseData +" created";
-              } else {
-                  $("#response").innerText = "There was an error creating a new account for the specified customer";
-              }
-          })
-       });
+        $("#submit_button").click(function () {
+            let postData = {customerId: $("#customer_id").val(), initialCredit: $("#initial_credit").val()};
+            $.ajax({
+                type: "POST",
+                url: "/accounts",
+                data: JSON.stringify(postData),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    if (status == 200) {
+                        $("#response").innerText = "New account created";
+                    } else {
+                        $("#response").innerText = "There was an error creating a new account for the specified customer";
+                    }
+                }
+            });
+        });
     });
 </script>
 
