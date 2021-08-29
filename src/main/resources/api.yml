@@ -216,6 +216,9 @@ components:
     Account:
       type: object
       properties:
+        id:
+          type: int
+          format: integer64
         transactions:
           type: array
           items:
@@ -228,7 +231,7 @@ components:
       properties:
         date:
           type: string
-          format: date
+          format: date-time
         amount:
           type: number
           format: float
