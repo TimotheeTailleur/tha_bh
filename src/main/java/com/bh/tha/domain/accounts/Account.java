@@ -6,7 +6,8 @@ import com.bh.tha.domain.transactions.Transaction;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "ACCOUNTS")
+@Entity
+@Table(name = "ACCOUNTS")
 public class Account {
 
     @Id
@@ -18,8 +19,11 @@ public class Account {
     private List<Transaction> transactions;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false, insertable = false, updatable = false)
     private Customer customer;
+
+    @Column(name = "CUSTOMER_ID", nullable = false)
+    private Long customerId;
 
     public Long getId() {
         return id;
@@ -45,4 +49,11 @@ public class Account {
         this.customer = customer;
     }
 
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 }

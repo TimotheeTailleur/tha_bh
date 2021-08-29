@@ -5,7 +5,8 @@ import com.bh.tha.domain.accounts.Account;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
-@Entity(name = "TRANSACTIONS")
+@Entity
+@Table(name = "TRANSACTIONS")
 public class Transaction {
 
     @Id
@@ -17,11 +18,14 @@ public class Transaction {
     private OffsetDateTime date;
 
     @Column(name = "AMOUNT")
-    private Float amount;
+    private Double amount;
 
     @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+    @JoinColumn(name = "ACCOUNT_ID", nullable = false, insertable = false, updatable = false)
     private Account account;
+
+    @Column(name = "ACCOUNT_ID", nullable = false)
+    private Long accountId;
 
     public Long getId() {
         return id;
@@ -39,19 +43,27 @@ public class Transaction {
         this.date = date;
     }
 
-    public Float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

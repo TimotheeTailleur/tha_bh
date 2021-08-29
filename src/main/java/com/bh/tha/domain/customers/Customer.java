@@ -5,7 +5,8 @@ import com.bh.tha.domain.accounts.Account;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "CUSTOMERS")
+@Entity
+@Table(name = "CUSTOMERS")
 public class Customer {
 
     @Id

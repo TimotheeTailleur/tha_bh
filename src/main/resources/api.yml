@@ -83,6 +83,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+        404: #Not Found
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         500: # Internal server error
           description: An unexpected error occurred
           content:
@@ -207,7 +214,7 @@ components:
           type: string
         balance:
           type: number
-          format: float
+          format: double
         accounts:
           type: array
           items:
@@ -234,7 +241,7 @@ components:
           format: date-time
         amount:
           type: number
-          format: float
+          format: double
 
     AccountCreationDTO:
       type: object
@@ -247,7 +254,7 @@ components:
           format: int64
         initialCredit:
           type: number
-          format: float
+          format: double
 
     TransactionCreationDTO:
       type: object
@@ -260,7 +267,7 @@ components:
           format: int64
         amount:
           type: number
-          format: float
+          format: double
 
     ErrorResponse:
       type: object
