@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface CustomersRepository extends JpaRepository<Customer, Long> {
 
     @Query("select c from Customer c LEFT JOIN FETCH c.accounts")
