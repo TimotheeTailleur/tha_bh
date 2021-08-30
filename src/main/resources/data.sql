@@ -1,0 +1,48 @@
+-- Customers
+INSERT INTO PUBLIC.CUSTOMERS VALUES(1, 'John', 'Smith');
+INSERT INTO PUBLIC.CUSTOMERS VALUES(2, 'Charles', 'Smith');
+INSERT INTO PUBLIC.CUSTOMERS VALUES(3, 'Bernard', 'Werber');
+INSERT INTO PUBLIC.CUSTOMERS VALUES(4, 'Rami', 'Malek');
+
+-- Accounts for customer with id 1
+INSERT INTO PUBLIC.ACCOUNTS VALUES (1, 1);
+INSERT INTO PUBLIC.ACCOUNTS VALUES (2, 1);
+
+-- Accounts for customer with ids 2 and 3
+INSERT INTO PUBLIC.ACCOUNTS VALUES (3, 2);
+INSERT INTO PUBLIC.ACCOUNTS VALUES (4, 3);
+
+-- Accounts for customer with id 4
+INSERT INTO PUBLIC.ACCOUNTS VALUES (5, 4);
+INSERT INTO PUBLIC.ACCOUNTS VALUES (6, 4);
+INSERT INTO PUBLIC.ACCOUNTS VALUES (7, 4);
+INSERT INTO PUBLIC.ACCOUNTS VALUES (8, 4);
+
+-- Transactions for account with id 1
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (1, 10.54, sysdate, 1);
+
+-- Transactions for account with id 2
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (2, 125.54, sysdate, 2);
+
+-- Transactions for account with id 3
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (3, 125.54, sysdate, 3);
+
+-- Transactions for account with id 4
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (4, 125.54, sysdate, 4);
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (5, 48.54, sysdate, 4);
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (6, 1.54, sysdate, 4);
+
+-- Transactions for account with id 5
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (7, 125.54, sysdate, 5);
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (8, 89.54, sysdate, 5);
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (9, 125.00, sysdate, 5);
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (10, 1116.48, sysdate, 5);
+
+-- Transactions for account with id 6
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (11, 0.54, sysdate, 6);
+
+-- Transactions for account with id 7
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (12, 1250.54, sysdate, 7);
+
+-- Transactions for account with id 8
+INSERT INTO PUBLIC.TRANSACTIONS VALUES (13, 178.65, sysdate, 8);
