@@ -26,6 +26,8 @@
     </div>
 </nav>
 
+<br>
+
 <div id="get_customer_info">
     <div class="input-field">
         <input id="customer_id" type="number">
@@ -55,10 +57,14 @@
                     <th scope="col">Amount</th>
                 </tr>
             </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
 
 </div>
+
+<br>
 
 <script>
 
@@ -72,8 +78,8 @@
                     $("#surname").text(data.surname);
                     $("#balance").text(data.balance);
 
-                    for (account in data.accounts) {
-                        for (transaction in account.transactions) {
+                    for (let account of data.accounts) {
+                        for (let transaction of account.transactions) {
                             newRow = '<tr>'+
                                 '<td>'+account.id +'</td>'+
                                 '<td>'+transaction.id +'</td>'+
