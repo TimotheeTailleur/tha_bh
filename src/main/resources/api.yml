@@ -236,6 +236,9 @@ components:
       required:
         - amount
       properties:
+        id:
+          type: int
+          format: integer64
         date:
           type: string
           format: date-time

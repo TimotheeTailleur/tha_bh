@@ -19,7 +19,7 @@ public class Account {
     private List<Transaction> transactions;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "CUSTOMER_ID", insertable = false, updatable = false)
     private Customer customer;
 
     @Column(name = "CUSTOMER_ID", nullable = false)

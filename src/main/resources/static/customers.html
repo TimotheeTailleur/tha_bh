@@ -26,6 +26,8 @@
     </div>
 </nav>
 
+<br>
+
 <div id="get_customer_info">
     <div class="input-field">
         <input id="customer_id" type="number">
@@ -55,10 +57,14 @@
                     <th scope="col">Amount</th>
                 </tr>
             </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
 
 </div>
+
+<br>
 
 <script>
 
@@ -67,13 +73,13 @@
             $("#search_result").show();
             customerId = document.getElementById("customer_id").value;
             $.get("/customers/"+customerId, function(data, status) {
-                if (status == 200) {
-                    $("#name").innerText = data.name;
-                    $("#surname").innerText = data.surName;
-                    $("#balance").innerText = data.balance;
+                if (status === "success") {
+                    $("#name").text(data.name);
+                    $("#surname").text(data.surname);
+                    $("#balance").text(data.balance);
 
-                    for (account in data.accounts) {
-                        for (transaction in account.transactions) {
+                    for (let account of data.accounts) {
+                        for (let transaction of account.transactions) {
                             newRow = '<tr>'+
                                 '<td>'+account.id +'</td>'+
                                 '<td>'+transaction.id +'</td>'+

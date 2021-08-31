@@ -9,7 +9,6 @@ import com.bh.tha.services.transactions.TransactionsService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
@@ -30,7 +29,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public Transaction createTransaction(TransactionCreationDTO dto) {
         if (dto.getAmount() == null || dto.getAccountId() == null) {
             throw new IllegalArgumentException("Bad request");
@@ -64,6 +63,6 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     public List<Transaction> getALl() {
-        return transactionsRepository.findAll();
+        return (List<Transaction>) transactionsRepository.findAll();
     }
 }

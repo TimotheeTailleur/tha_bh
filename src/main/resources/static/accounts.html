@@ -26,6 +26,8 @@
     </div>
 </nav>
 
+<br>
+
 <div id="create_new_account">
     <div class="input-field">
         <label for="customer_id">Customer Id</label>
@@ -41,6 +43,8 @@
     </button>
 
 </div>
+
+<br>
 
 <div id="response" hidden>
 
@@ -59,10 +63,10 @@
                     'Content-Type': 'application/json'
                 },
                 success: function (data) {
-                    if (status == 200) {
-                        $("#response").innerText = "New account created";
+                    if (status === "success") {
+                        $("#response").text("New account created");
                     } else {
-                        $("#response").innerText = "There was an error creating a new account for the specified customer";
+                        $("#response").text("There was an error creating a new account for the specified customer");
                     }
                 }
             });

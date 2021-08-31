@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TransactionMapper {
 
     Transaction toDto(com.bh.tha.domain.transactions.Transaction transaction);

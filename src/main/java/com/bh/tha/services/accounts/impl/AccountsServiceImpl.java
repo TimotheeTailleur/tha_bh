@@ -13,11 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountsServiceImpl implements AccountsService {
+
+    @PersistenceContext
+    EntityManager em;
 
     private CustomersRepository customersRepository;
 
@@ -45,19 +50,29 @@ public class AccountsServiceImpl implements AccountsService {
 
         Account account = new Account();
         account.setCustomerId(dto.getCustomerId());
-        account = accountsRepository.saveAndFlush(account);
+        account = accountsRepository.save(account);
 
         if (dto.getInitialCredit() != null && !dto.getInitialCredit().equals(0D)) {
             TransactionCreationDTO transactionCreationDTO = new TransactionCreationDTO();
             transactionCreationDTO.setAccountId(account.getId());
             transactionCreationDTO.setAmount(dto.getInitialCredit());
             try {
+                /*
+                    Because we want our API to return the successfully created account with the newly created
+                    transaction data, we have to flush and clear the EM's content
+                    That way, when we will query the DB against our account, the created transaction will have already been
+                    persisted.
+                 */
                 transactionsService.createTransaction(transactionCreationDTO);
+                em.flush();
+                em.clear();
             } catch (NotFoundException notFoundException) {
                 notFoundException.printStackTrace();
             }
         }
-        return accountsRepository.getById(account.getId());
+        Account createdAccount = accountsRepository.findById(account.getId()).get();
+        createdAccount.getTransactions(); //Get transactions because they were lazily fetched
+        return createdAccount;
     }
 
     @Override
