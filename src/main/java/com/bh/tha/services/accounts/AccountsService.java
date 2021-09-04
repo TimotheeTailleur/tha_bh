@@ -5,6 +5,7 @@ import com.bh.tha.dto.AccountCreationDTO;
 import javassist.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountsService {
 
@@ -13,4 +14,6 @@ public interface AccountsService {
     List<Account> getAccountsForCustomer(Long customerId) throws NotFoundException;
 
     List<Account> getAll();
+
+    Optional<Account> findByIdAndFetchTransactions(Long id);
 }

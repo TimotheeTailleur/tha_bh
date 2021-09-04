@@ -33,6 +33,8 @@ public class TransactionsController implements TransactionsApi {
         try {
             Transaction createdTransaction = transactionMapper.toDto(transactionsService.createTransaction(transactionCreationDTO));
             return ResponseEntity.ok(createdTransaction);
+        } catch (NotFoundException e1) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

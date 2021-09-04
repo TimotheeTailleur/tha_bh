@@ -40,7 +40,7 @@ public class CustomersServiceImpl implements CustomersService {
 
     @Override
     public List<Customer> getAll() {
-        List<Customer> customers = customersRepository.getAll();
+        List<Customer> customers = customersRepository.getAllAndFetchAccounts();
         if (!CollectionUtils.isEmpty(customers)) {
             for (Customer customer : customers) {
                 if (!CollectionUtils.isEmpty(customer.getAccounts())) {

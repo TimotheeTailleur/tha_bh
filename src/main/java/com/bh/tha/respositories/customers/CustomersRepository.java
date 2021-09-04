@@ -9,5 +9,5 @@ import java.util.List;
 public interface CustomersRepository extends CrudRepository<Customer, Long> {
 
     @Query("select c from Customer c LEFT JOIN FETCH c.accounts")
-    List<Customer> getAll();
+    List<Customer> getAllAndFetchAccounts();
 }
