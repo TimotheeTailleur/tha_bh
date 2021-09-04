@@ -98,4 +98,9 @@ public class AccountsServiceImpl implements AccountsService {
     public List<Account> getAll() {
         return accountsRepository.getAll();
     }
+
+    @Override
+    public Optional<Account> findByIdAndFetchTransactions(Long id) {
+        return accountsRepository.findByIdAndFetchTransactions(id);
+    }
 }

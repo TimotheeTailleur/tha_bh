@@ -30,13 +30,13 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     @Transactional
-    public Transaction createTransaction(TransactionCreationDTO dto) {
+    public Transaction createTransaction(TransactionCreationDTO dto) throws NotFoundException {
         if (dto.getAmount() == null || dto.getAccountId() == null) {
             throw new IllegalArgumentException("Bad request");
         }
 
         if (!accountsRepository.existsById(dto.getAccountId())) {
-            throw new IllegalArgumentException(String.format("Could not find account with id : %s", dto.getAccountId()));
+            throw new NotFoundException(String.format("Could not find account with id : %s", dto.getAccountId()));
         }
 
         Transaction transaction = new Transaction();
