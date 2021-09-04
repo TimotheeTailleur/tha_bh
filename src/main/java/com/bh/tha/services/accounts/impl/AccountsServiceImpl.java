@@ -77,9 +77,9 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Account> getAccountsForCustomer(Long customerId) throws NotFoundException {
+    public List<Account> findAccounts(Long customerId) throws NotFoundException {
         if (customerId == null) {
-            throw new IllegalArgumentException("Bad request");
+            return getAll();
         }
 
         Optional<Customer> customer = customersRepository.findById(customerId);

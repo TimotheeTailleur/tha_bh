@@ -22,6 +22,7 @@
             <li><a href="homepage.html">Home</a></li>
             <li class="active" ><a href="customers.html">Customers</a></li>
             <li><a href="accounts.html">Accounts</a></li>
+            <li><a href="db_lookup.html">DB Lookup</a></li>
         </ul>
     </div>
 </nav>
@@ -81,6 +82,7 @@
             $("#search_result").show();
             customerId = document.getElementById("customer_id").value;
             $.get("/customers/"+customerId, function(data, status) {
+
                 if (status === "success") {
                     $("#name").text(data.name);
                     $("#surname").text(data.surname);
@@ -88,10 +90,11 @@
 
                     for (let account of data.accounts) {
                         for (let transaction of account.transactions) {
-                            newRow = '<tr>'+
-                                '<td>'+account.id +'</td>'+
-                                '<td>'+transaction.id +'</td>'+
-                                '<td>'+transaction.amount +'</td>'+ '</tr>';
+                            let newRow;
+                            newRow = '<tr>' +
+                                '<td>' + account.id + '</td>' +
+                                '<td>' + transaction.id + '</td>' +
+                                '<td>' + transaction.amount + '</td>' + '</tr>';
                             $('#transactions_table tr:last').after(newRow);
                         }
                     }

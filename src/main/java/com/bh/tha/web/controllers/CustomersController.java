@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @RestController
 public class CustomersController implements CustomersApi {
@@ -36,5 +37,10 @@ public class CustomersController implements CustomersApi {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @Override
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return ResponseEntity.ok(customerMapper.toDtoList(customersService.getAll()));
     }
 }

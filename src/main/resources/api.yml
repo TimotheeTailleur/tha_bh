@@ -16,6 +16,21 @@ tags:
 
 
 paths:
+  /customers:
+    get:
+      operationId: getAllCustomers
+      summary: Returns a list of all customers
+      tags:
+        - customers
+      responses:
+        200: #Ok
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Customer'
   /customers/{id}:
     parameters:
       - in: path
@@ -97,12 +112,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     get:
-      operationId: getAccounts
+      operationId: findAccounts
       parameters:
         - in: query
           name: customerId
           description: Customer that owns the accounts
-          required: true
+          required: false
           schema:
             type: integer
             format: int64
@@ -134,12 +149,12 @@ paths:
 
   /transactions:
     get:
-      operationId: getTransactions
+      operationId: findTransactions
       parameters:
         - in: query
           name: accountId
           description: Account the transaction(s) is/are linked to
-          required: true
+          required: false
           schema:
             type: integer
             format: int64

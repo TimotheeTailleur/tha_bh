@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
@@ -58,6 +57,6 @@ class AccountsServiceUnitTests {
 
         //When
         Mockito.when(customersRepository.findById(customerId)).thenReturn(emptyCustomerOptional);
-        assertThrows(NotFoundException.class, () -> accountsService.getAccountsForCustomer(customerId));
+        assertThrows(NotFoundException.class, () -> accountsService.findAccounts(customerId));
     }
 }

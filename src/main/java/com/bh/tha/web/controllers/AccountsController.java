@@ -43,9 +43,9 @@ public class AccountsController implements AccountsApi {
     }
 
     @Override
-    public ResponseEntity<List<Account>> getAccounts(@NotNull @Min(1L) @Valid Long customerId) {
+    public ResponseEntity<List<Account>> findAccounts(@Min(1L) @Valid Long customerId) {
         try {
-            List<Account> accountList = accountMapper.toDtoList(accountsService.getAccountsForCustomer(customerId));
+            List<Account> accountList = accountMapper.toDtoList(accountsService.findAccounts(customerId));
             return ResponseEntity.ok(accountList);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

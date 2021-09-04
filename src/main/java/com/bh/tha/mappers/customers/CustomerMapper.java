@@ -7,12 +7,16 @@ import com.bh.tha.mappers.accounts.AccountMapper;
 import org.mapstruct.*;
 import org.springframework.util.CollectionUtils;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {AccountMapper.class})
 public interface CustomerMapper {
 
     Customer toDto(com.bh.tha.domain.customers.Customer customer);
 
     com.bh.tha.domain.customers.Customer toEntity(Customer customer);
+
+    List<Customer> toDtoList(List<com.bh.tha.domain.customers.Customer> customerList);
 
     @AfterMapping
     default void populateBalance(@MappingTarget Customer customer) {
