@@ -41,11 +41,11 @@
         <h2>Search result</h2>
 
         <label for="name">Name</label>
-        <p id="name">Nn</p>
+        <p id="name">Name placeholder</p>
         <label for="surname">Surname</label>
-        <p id="surname">ss</p>
+        <p id="surname">Surname placeholder</p>
         <label for="balance">Balance</label>
-        <p id="balance">bb</p>
+        <p id="balance">Balance placeholder</p>
 
 
         <label for="transactions_table">Stored transactions</label>
@@ -70,6 +70,14 @@
 
     $(document).ready(function(){
         $("#search_button").click(function() {
+
+            //If the search result is already visible, we need to refresh the table
+            if ($('#search_result').is(":visible")) {
+                $("#name").text('Name placeholder');
+                $("#surname").text('Surname placeholder');
+                $("#balance").text('Balance placeholder');
+                $("#transactions_table td").parent().remove();
+            }
             $("#search_result").show();
             customerId = document.getElementById("customer_id").value;
             $.get("/customers/"+customerId, function(data, status) {
