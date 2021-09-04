@@ -2,9 +2,10 @@ package com.bh.tha.mappers.customers;
 
 import com.bh.tha.dto.Account;
 import com.bh.tha.dto.Customer;
-import com.bh.tha.dto.Transaction;
 import com.bh.tha.mappers.accounts.AccountMapper;
-import org.mapstruct.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -23,9 +24,7 @@ public interface CustomerMapper {
         Double customerBalance = 0.0D;
         if (!CollectionUtils.isEmpty(customer.getAccounts())) {
             for (Account account : customer.getAccounts()) {
-                for (Transaction transaction : account.getTransactions()) {
-                    customerBalance+=transaction.getAmount();
-                }
+                customerBalance+=account.getBalance();
             }
         }
         customer.setBalance(customerBalance);
