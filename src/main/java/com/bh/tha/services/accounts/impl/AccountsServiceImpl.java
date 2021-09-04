@@ -50,6 +50,7 @@ public class AccountsServiceImpl implements AccountsService {
 
         Account account = new Account();
         account.setCustomerId(dto.getCustomerId());
+        account.setBalance(0.0D);
         account = accountsRepository.save(account);
 
         if (dto.getInitialCredit() != null && !dto.getInitialCredit().equals(0D)) {
@@ -64,6 +65,7 @@ public class AccountsServiceImpl implements AccountsService {
                     persisted.
                  */
                 transactionsService.createTransaction(transactionCreationDTO);
+                updateAccountBalance(account.getId(), dto.getInitialCredit());
                 em.flush();
                 em.clear();
             } catch (NotFoundException notFoundException) {
@@ -73,6 +75,16 @@ public class AccountsServiceImpl implements AccountsService {
         Account createdAccount = accountsRepository.findById(account.getId()).get();
         createdAccount.getTransactions(); //Get transactions because they were lazily fetched
         return createdAccount;
+    }
+
+    @Transactional
+    public void updateAccountBalance(Long id, Double newBalance) throws NotFoundException {
+        Optional<Account> account = accountsRepository.findById(id);
+        if (!account.isPresent()) {
+            throw new NotFoundException(String.format("Account with id %d Not Found", id));
+        }
+        account.get().setBalance(newBalance);
+        accountsRepository.save(account.get());
     }
 
     @Override

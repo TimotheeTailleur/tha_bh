@@ -25,6 +25,9 @@ public class Account {
     @Column(name = "CUSTOMER_ID", nullable = false)
     private Long customerId;
 
+    @Column(name = "BALANCE", nullable = false)
+    private double balance;
+
     public Long getId() {
         return id;
     }
@@ -55,5 +58,13 @@ public class Account {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

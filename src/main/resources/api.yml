@@ -245,6 +245,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Transaction'
+        balance:
+          type: number
+          format: double
 
     Transaction:
       type: object
