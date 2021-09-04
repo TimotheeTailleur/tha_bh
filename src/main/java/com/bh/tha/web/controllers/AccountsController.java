@@ -3,6 +3,7 @@ package com.bh.tha.web.controllers;
 import com.bh.tha.api.AccountsApi;
 import com.bh.tha.dto.Account;
 import com.bh.tha.dto.AccountCreationDTO;
+import com.bh.tha.dto.DetailedAccount;
 import com.bh.tha.mappers.accounts.AccountMapper;
 import com.bh.tha.services.accounts.AccountsService;
 import javassist.NotFoundException;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -43,9 +43,9 @@ public class AccountsController implements AccountsApi {
     }
 
     @Override
-    public ResponseEntity<List<Account>> findAccounts(@Min(1L) @Valid Long customerId) {
+    public ResponseEntity<List<DetailedAccount>> findAccounts(@Min(1L) @Valid Long customerId) {
         try {
-            List<Account> accountList = accountMapper.toDtoList(accountsService.findAccounts(customerId));
+            List<DetailedAccount> accountList = accountMapper.toDetailedDtoList(accountsService.findAccounts(customerId));
             return ResponseEntity.ok(accountList);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

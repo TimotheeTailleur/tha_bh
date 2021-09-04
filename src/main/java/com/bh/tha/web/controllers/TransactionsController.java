@@ -1,6 +1,7 @@
 package com.bh.tha.web.controllers;
 
 import com.bh.tha.api.TransactionsApi;
+import com.bh.tha.dto.DetailedTransaction;
 import com.bh.tha.dto.Transaction;
 import com.bh.tha.dto.TransactionCreationDTO;
 import com.bh.tha.mappers.transactions.TransactionMapper;
@@ -40,9 +41,9 @@ public class TransactionsController implements TransactionsApi {
     }
 
     @Override
-    public ResponseEntity<List<Transaction>> findTransactions(@Min(1L) @Valid Long accountId) {
+    public ResponseEntity<List<DetailedTransaction>> findTransactions(@Min(1L) @Valid Long accountId) {
         try {
-            List<Transaction> transactionList = transactionMapper.toDtoList(transactionsService.findTransactions(accountId));
+            List<DetailedTransaction> transactionList = transactionMapper.toDetailedDtoList(transactionsService.findTransactions(accountId));
             return ResponseEntity.ok(transactionList);
         } catch (NotFoundException e1) {
             return ResponseEntity.notFound().build();

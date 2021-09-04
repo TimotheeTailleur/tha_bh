@@ -109,7 +109,7 @@
                         let newRow;
                         newRow = '<tr>' +
                             '<td>' + account.id + '</td>' +
-                            '<td>' + account.customer.id + '</td>' +
+                            '<td>' + account.customer.name +' ' +account.customer.surname + '</td>' +
                             '<td>' + account.balance + '</td>' + '</tr>';
                         $('#accounts_table tr:last').after(newRow);
                     }

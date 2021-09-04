@@ -131,7 +131,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Account'
+                  $ref: '#/components/schemas/DetailedAccount'
         400: # Bad request
           description: Invalid request structure
           content:
@@ -168,7 +168,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: '#/components/schemas/DetailedTransaction'
         400: # Bad request
           description: Invalid request structure
           content:
@@ -286,6 +286,21 @@ components:
         amount:
           type: number
           format: double
+
+    DetailedAccount:
+      allOf:
+        - $ref: '#/components/schemas/Account'
+        - type: object
+      properties:
+        customer:
+          $ref: ''#/components/schemas/Customer'
+
+    DetailedTransaction:
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
 
     ErrorResponse:
       type: object
