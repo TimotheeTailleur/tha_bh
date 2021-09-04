@@ -1,6 +1,7 @@
 package com.bh.tha.web.controllers;
 
 import com.bh.tha.api.TransactionsApi;
+import com.bh.tha.dto.DetailedTransaction;
 import com.bh.tha.dto.Transaction;
 import com.bh.tha.dto.TransactionCreationDTO;
 import com.bh.tha.mappers.transactions.TransactionMapper;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -41,16 +41,14 @@ public class TransactionsController implements TransactionsApi {
     }
 
     @Override
-    public ResponseEntity<List<Transaction>> getTransactions(@NotNull @Min(1L) @Valid Long accountId) {
+    public ResponseEntity<List<DetailedTransaction>> findTransactions(@Min(1L) @Valid Long accountId) {
         try {
-            List<Transaction> transactionList = transactionMapper.toDtoList(transactionsService.getTransactionsForAccount(accountId));
+            List<DetailedTransaction> transactionList = transactionMapper.toDetailedDtoList(transactionsService.findTransactions(accountId));
             return ResponseEntity.ok(transactionList);
         } catch (NotFoundException e1) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-
-
     }
 }

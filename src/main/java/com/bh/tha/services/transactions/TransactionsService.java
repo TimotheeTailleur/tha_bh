@@ -10,7 +10,7 @@ public interface TransactionsService {
 
     Transaction createTransaction(TransactionCreationDTO dto) throws NotFoundException;
 
-    List<Transaction> getTransactionsForAccount(Long accountId) throws NotFoundException;
+    List<Transaction> findTransactions(Long accountId) throws NotFoundException;
 
     List<Transaction> getALl();
 }

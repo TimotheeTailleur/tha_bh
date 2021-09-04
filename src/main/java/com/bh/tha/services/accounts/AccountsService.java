@@ -11,7 +11,7 @@ public interface AccountsService {
 
     Account createAccount(AccountCreationDTO dto) throws NotFoundException;
 
-    List<Account> getAccountsForCustomer(Long customerId) throws NotFoundException;
+    List<Account> findAccounts(Long customerId) throws NotFoundException;
 
     List<Account> getAll();
 

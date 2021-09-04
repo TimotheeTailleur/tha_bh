@@ -63,6 +63,6 @@ class TransactionsServiceUnitTests {
 
         //When
         Mockito.when(accountsRepository.findById(accountId)).thenReturn(optionalAccount);
-        assertThrows(NotFoundException.class, () -> transactionsService.getTransactionsForAccount(accountId));
+        assertThrows(NotFoundException.class, () -> transactionsService.findTransactions(accountId));
     }
 }

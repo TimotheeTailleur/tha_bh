@@ -48,9 +48,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Transaction> getTransactionsForAccount(Long accountId) throws NotFoundException {
+    public List<Transaction> findTransactions(Long accountId) throws NotFoundException {
         if (accountId == null) {
-            throw new IllegalArgumentException("Bad request");
+            return getALl();
         }
         Optional<Account> account = accountsRepository.findById(accountId);
 

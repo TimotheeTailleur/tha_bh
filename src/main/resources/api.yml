@@ -16,6 +16,21 @@ tags:
 
 
 paths:
+  /customers:
+    get:
+      operationId: getAllCustomers
+      summary: Returns a list of all customers
+      tags:
+        - customers
+      responses:
+        200: #Ok
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Customer'
   /customers/{id}:
     parameters:
       - in: path
@@ -97,12 +112,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     get:
-      operationId: getAccounts
+      operationId: findAccounts
       parameters:
         - in: query
           name: customerId
           description: Customer that owns the accounts
-          required: true
+          required: false
           schema:
             type: integer
             format: int64
@@ -116,7 +131,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Account'
+                  $ref: '#/components/schemas/DetailedAccount'
         400: # Bad request
           description: Invalid request structure
           content:
@@ -134,12 +149,12 @@ paths:
 
   /transactions:
     get:
-      operationId: getTransactions
+      operationId: findTransactions
       parameters:
         - in: query
           name: accountId
           description: Account the transaction(s) is/are linked to
-          required: true
+          required: false
           schema:
             type: integer
             format: int64
@@ -153,7 +168,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: '#/components/schemas/DetailedTransaction'
         400: # Bad request
           description: Invalid request structure
           content:
@@ -271,6 +286,21 @@ components:
         amount:
           type: number
           format: double
+
+    DetailedAccount:
+      allOf:
+        - $ref: '#/components/schemas/Account'
+        - type: object
+      properties:
+        customer:
+          $ref: ''#/components/schemas/Customer'
+
+    DetailedTransaction:
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
 
     ErrorResponse:
       type: object
