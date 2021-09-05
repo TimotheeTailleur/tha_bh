@@ -64,11 +64,14 @@
                     'Content-Type': 'application/json'
                 },
                 success: function (data) {
-                    if (status === "success") {
-                        $("#response").text("New account created");
-                    } else {
-                        $("#response").text("There was an error creating a new account for the specified customer");
-                    }
+                    let responseText = 'New account with id '+data.id +' created for custmer with id ' + postData.customerId+ ' current Balance : '+ data.balance;
+                    $("#response").text(responseText);
+                    $('#response').show();
+                },
+                error: function (data) {
+                    let responseText = 'Server responded with : '+ data.responseJSON.status+' and message : '+data.responseJSON.message;
+                    $("#response").text(responseText)
+                    $('#response').show();
                 }
             });
         });

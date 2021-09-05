@@ -10,6 +10,9 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import static org.springframework.http.HttpStatus.*;
+
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -34,11 +37,11 @@ public class AccountsController implements AccountsApi {
             Account createdAccount = accountMapper.toDto(accountsService.createAccount(accountCreationDTO));
             return ResponseEntity.ok(createdAccount);
         } catch(NotFoundException e3) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(NOT_FOUND, e3.getMessage());
         }catch (IllegalArgumentException e1) {
-            return ResponseEntity.badRequest().build();
+            throw new ResponseStatusException(BAD_REQUEST, e1.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 

@@ -41,7 +41,7 @@ public class AccountsServiceImpl implements AccountsService {
     @Transactional
     public Account createAccount(AccountCreationDTO dto) throws NotFoundException {
         if (dto.getCustomerId() == null) {
-            throw new IllegalArgumentException("Bad request");
+            throw new IllegalArgumentException("Bad request : customerId must not be null");
         }
 
         if (!customersRepository.existsById(dto.getCustomerId())) {
