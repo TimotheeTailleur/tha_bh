@@ -38,6 +38,12 @@
     <button id="search_button" class="btn waves-effect waves-light">Submit
     </button>
 
+    <div id="response" hidden>
+
+    </div>
+
+    <br>
+
     <div id="search_result" hidden>
         <h2>Search result</h2>
 
@@ -79,11 +85,11 @@
                 $("#balance").text('Balance placeholder');
                 $("#transactions_table td").parent().remove();
             }
-            $("#search_result").show();
-            customerId = document.getElementById("customer_id").value;
-            $.get("/customers/"+customerId, function(data, status) {
 
-                if (status === "success") {
+            customerId = document.getElementById("customer_id").value === "" ? " " :  document.getElementById("customer_id").value;
+            if (customerId !== "") {
+                $.get("/customers/"+customerId, function(data) {
+                    $('#response').hide();
                     $("#name").text(data.name);
                     $("#surname").text(data.surname);
                     $("#balance").text(data.balance);
@@ -98,12 +104,19 @@
                             $('#transactions_table tr:last').after(newRow);
                         }
                     }
-                }
-            });
+                    $("#search_result").show();
+                }).fail(function(data) {
+                    //If the search result is already visible, we need to refresh the table
+                    if ($('#search_result').is(":visible")) {
+                        $("#search_result").hide();
+                    }
+                    let responseText = 'Server responded with : '+ data.responseJSON.status+' and message : '+data.responseJSON.message;
+                    $("#response").text(responseText)
+                    $('#response').show();
+                });
+            }
         });
     });
-
-
 </script>
 </body>
 </html>

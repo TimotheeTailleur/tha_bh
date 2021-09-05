@@ -8,9 +8,12 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Min;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 public class CustomersController implements CustomersApi {
@@ -31,11 +34,11 @@ public class CustomersController implements CustomersApi {
             Customer customer = customerMapper.toDto(customersService.getCustomerById(id));
             return ResponseEntity.ok(customer);
         } catch (NotFoundException notFoundException) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(NOT_FOUND, notFoundException.getMessage());
         } catch (IllegalArgumentException e1) {
-            return ResponseEntity.badRequest().build();
+            throw new ResponseStatusException(BAD_REQUEST, e1.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 

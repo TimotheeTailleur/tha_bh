@@ -10,10 +10,13 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 public class TransactionsController implements TransactionsApi {
@@ -34,9 +37,11 @@ public class TransactionsController implements TransactionsApi {
             Transaction createdTransaction = transactionMapper.toDto(transactionsService.createTransaction(transactionCreationDTO));
             return ResponseEntity.ok(createdTransaction);
         } catch (NotFoundException e1) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(NOT_FOUND, e1.getMessage());
+        } catch (IllegalArgumentException e2) {
+            throw new ResponseStatusException(BAD_REQUEST, e2.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
@@ -46,9 +51,9 @@ public class TransactionsController implements TransactionsApi {
             List<DetailedTransaction> transactionList = transactionMapper.toDetailedDtoList(transactionsService.findTransactions(accountId));
             return ResponseEntity.ok(transactionList);
         } catch (NotFoundException e1) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(NOT_FOUND, e1.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 }
