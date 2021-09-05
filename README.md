@@ -1,5 +1,5 @@
 # Take Home Assignment - Timothée Tailleur
-##Prerequisites :
+## Prerequisites :
 
 - OpenJDK 11
 - Maven 3
