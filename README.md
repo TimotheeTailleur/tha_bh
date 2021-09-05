@@ -5,11 +5,11 @@
 - Maven 3
 - Docker
 
-##How to build it :
+## How to build it :
 
 Either import the project in your favorite IDE and run mvn clean install or (if you have maven in your PATH) simply run mvn clean install from the command line at the root of the repository
 
-##How to run it :
+## How to run it :
 
 At the root of the repository, run the following commands : 
 
