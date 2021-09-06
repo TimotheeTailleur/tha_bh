@@ -1,0 +1,318 @@
+openapi: 3.0.0
+info:
+  title: BH THA API
+  description: BH THA API
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+
+tags:
+  - name: customers
+    description: Customer management API. Able to query customer details
+  - name: accounts
+    description: Account management API. Able to create an account for a specified user and query accounts
+  - name: transactions
+    description: Transaction management API. Able to query transactions
+
+
+paths:
+  /customers:
+    get:
+      operationId: getAllCustomers
+      summary: Returns a list of all customers
+      tags:
+        - customers
+      responses:
+        200: #Ok
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+        description: Customer identifier
+    get:
+      operationId: getCustomer
+      summary: Get customer details using Id
+      tags:
+        - customers
+      responses:
+        200: # OK
+          description: Customer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        400: # Bad request
+          description: Invalid request structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404: # Not found
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500: # Internal server error
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /accounts:
+    post:
+      operationId: createAccount
+      summary: Create account for specified customer
+      tags:
+        - accounts
+      requestBody:
+        description: Account creation parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreationDTO'
+      responses:
+        200: #Ok
+          description: Succesfully created Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        400: # Bad request
+          description: Invalid request structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        404: #Not Found
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500: # Internal server error
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      operationId: findAccounts
+      parameters:
+        - in: query
+          name: customerId
+          description: Customer that owns the accounts
+          required: false
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            description: Unique identifier for a Customer
+      responses:
+        200: #Ok
+          description: List of transaction details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DetailedAccount'
+        400: # Bad request
+          description: Invalid request structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500: # Internal server error
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - account
+
+  /transactions:
+    get:
+      operationId: findTransactions
+      parameters:
+        - in: query
+          name: accountId
+          description: Account the transaction(s) is/are linked to
+          required: false
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            description: Unique identifier for an account object
+      responses:
+        200: #Ok
+          description: List of transaction details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DetailedTransaction'
+        400: # Bad request
+          description: Invalid request structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500: # Internal server error
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - transactions
+    post:
+      operationId: createTransaction
+      summary: Creates a transaction with the data passed as request body
+      tags:
+        - transactions
+      requestBody:
+        description: Transaction creation parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionCreationDTO'
+      responses:
+        200: #Ok
+          description: Succesfully created Transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        400: # Bad request
+          description: Invalid request structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500: # Internal server error
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Customer:
+      type: object
+      required:
+        - name
+        - surname
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        balance:
+          type: number
+          format: double
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+
+    Account:
+      type: object
+      properties:
+        id:
+          type: int
+          format: integer64
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        balance:
+          type: number
+          format: double
+
+    Transaction:
+      type: object
+      required:
+        - amount
+      properties:
+        id:
+          type: int
+          format: integer64
+        date:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+
+    AccountCreationDTO:
+      type: object
+      required:
+        - customerId
+        - initialCredit
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        initialCredit:
+          type: number
+          format: double
+
+    TransactionCreationDTO:
+      type: object
+      required:
+        - accountId
+        - amount
+      properties:
+        accountId:
+          type: integer
+          format: int64
+        amount:
+          type: number
+          format: double
+
+    DetailedAccount:
+      allOf:
+        - $ref: '#/components/schemas/Account'
+        - type: object
+      properties:
+        customer:
+          $ref: ''#/components/schemas/Customer'
+
+    DetailedTransaction:
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
+
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
